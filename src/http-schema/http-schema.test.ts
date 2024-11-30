@@ -75,6 +75,10 @@ const enhancedArticleExample = {
           type: 'Periodical',
           volumeNumber: 'one',
         },
+        meta: {
+          yearPublished: '2024a',
+          label: 'i am a label',
+        },
       },
       {
         type: 'Article',
@@ -265,6 +269,14 @@ describe('httpschema (EnhancedArticleSchema)', () => {
     expect(enhancedArticle.value?.preprintPosted).toStrictEqual(new Date('2023-01-02'));
     expect(enhancedArticle.value?.sentForReview).toStrictEqual(new Date('2023-01-03'));
     expect(enhancedArticle.value?.published).toStrictEqual(new Date('2023-01-23'));
+  });
+
+  it('validates optional reference meta', () => {
+    const enhancedArticle = EnhancedArticleSchema.validate(enhancedArticleExample);
+
+    expect(enhancedArticle.error).toBeUndefined();
+    expect(enhancedArticle.value?.article.references[2].meta.label).toStrictEqual('i am a label');
+    expect(enhancedArticle.value?.article.references[2].meta.yearPublished).toStrictEqual('2024a');
   });
 
   it('will convert publishedYear to number from string', () => {
