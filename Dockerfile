@@ -1,4 +1,4 @@
-ARG node_version=20.18-alpine3.20
+ARG node_version=22.13-alpine3.20
 
 FROM node:${node_version} as base
 
